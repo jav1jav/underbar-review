@@ -39,11 +39,11 @@
   // last element.
   _.last = function(array, n) {
     if (n > array.length) {
-      return array
+      return array;
     } else if (n === 0) {
       return [];
     }
-    return n === undefined ? array[array.length-1] : array.slice(n);
+    return n === undefined ? array[array.length - 1] : array.slice(n);
     //comment
   };
 
@@ -186,7 +186,7 @@
   // iterator(accumulator, item) for each item. accumulator should be
   // the return value of the previous iterator call.
   
-     //accumaltor = iterator(accumulator, item);
+  //accumaltor = iterator(accumulator, item);
   //  
   // You can pass in a starting value for the accumulator as the third argument
   // to reduce. If no starting value is passed, the first element is used as
@@ -206,19 +206,28 @@
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
     
-    if (accumulator === undefined) {
-      accumulator = collection[0];
-      for (var i = 1; i < collection.length; i++) {
-        var item = collection[i];
-        accumulator = iterator(accumulator, item);
-      }
-    } else {
-      for (var i = 0; i < collection.length; i++) {
-        var item = collection[i];
-        accumulator = iterator(accumulator, item);
-      }
-    }
-    
+    if (Array.isArray(collection)) {
+      if (accumulator === undefined) {
+        accumulator = collection[0];
+        for (var i = 1; i < collection.length; i++) {
+          var item = collection[i];
+          accumulator = iterator(accumulator, item);
+        }
+      } else {
+        for (var i = 0; i < collection.length; i++) {
+          var item = collection[i];
+          accumulator = iterator(accumulator, item);
+        }
+      }      
+    } else if (typeof collection === 'object') {
+      for (var key in collection) {
+        if (accumulator === undefined) {
+          accumulator = collection[key];
+        } 
+        accumulator = iterator(accumulator, collection[key]);
+      }        
+      
+    }    
     return accumulator;
   };
 

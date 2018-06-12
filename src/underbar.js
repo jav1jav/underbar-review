@@ -116,13 +116,31 @@
   };
 
   // Produce a duplicate-free version of the array.
+
+  // From underbar documentation on uniq: Produces a duplicate-free version of the array, using === to test object equality. In particular only the first occurence of each value is kept. If you know in advance that the array is sorted, passing true for isSorted will run a much faster algorithm. If you want to compute unique items based on a transformation, pass an iteratee function.
   _.uniq = function(array, isSorted, iterator) {
+    
+    //sorted = boolean
+
+    // var set = new Set(array);
+    // return Array.from(set);
+
     let newArr = [];
-    _.each(array, function(el) {
-      if (_.indexOf(newArr, el) === -1) {
-        newArr.push(el);
-      }
-    });
+    let testArr = [];
+    if (iterator !== undefined) {
+      _.each(array, function(el) {
+        if (_.indexOf(testArr, iterator(el)) === -1) {
+          testArr.push(iterator(el));
+          newArr.push(el);
+        }      
+      });      
+    } else {
+      _.each(array, function(el) {
+        if (_.indexOf(newArr, el) === -1) {
+          newArr.push(el);
+        }      
+      });
+    }
     return newArr;
 
   };
@@ -133,6 +151,17 @@
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+    
+    // input = collection and iterator
+    // output = a new mutated array from calling iterator in every element
+    
+    var arr = [];
+    _.each(collection, function(el) {
+      arr.push(iterator(el));
+    });
+    
+    return arr;
+    
   };
 
   /*
@@ -156,6 +185,8 @@
   // Reduces an array or object to a single value by repetitively calling
   // iterator(accumulator, item) for each item. accumulator should be
   // the return value of the previous iterator call.
+  
+     //accumaltor = iterator(accumulator, item);
   //  
   // You can pass in a starting value for the accumulator as the third argument
   // to reduce. If no starting value is passed, the first element is used as
@@ -174,6 +205,21 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+    
+    if (accumulator === undefined) {
+      accumulator = collection[0];
+      for (var i = 1; i < collection.length; i++) {
+        var item = collection[i];
+        accumulator = iterator(accumulator, item);
+      }
+    } else {
+      for (var i = 0; i < collection.length; i++) {
+        var item = collection[i];
+        accumulator = iterator(accumulator, item);
+      }
+    }
+    
+    return accumulator;
   };
 
   // Determine if the array or object contains a given value (using `===`).

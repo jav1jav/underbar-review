@@ -44,7 +44,7 @@
       return [];
     }
     return n === undefined ? array[array.length-1] : array.slice(n);
-   
+    //comment
   };
 
   // Call iterator(value, key, collection) for each element of collection.
@@ -85,16 +85,46 @@
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
+    let newArr = [];
+    _.each(collection, function(element) {
+      if (test(element)) {
+        newArr.push(element);
+      }
+    });
+    return newArr;
   };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    return _.filter(collection, function(el) {
+      if (!test(el)) {
+        return el;
+      }
+    });
+
+    /*
+    let newArr = [];
+    _.each(collection, function(element) {
+      if (!test(element)) {
+        newArr.push(element);
+      }
+    });
+    return newArr;
+    */
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    let newArr = [];
+    _.each(array, function(el) {
+      if (_.indexOf(newArr, el) === -1) {
+        newArr.push(el);
+      }
+    });
+    return newArr;
+
   };
 
 

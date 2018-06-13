@@ -247,12 +247,39 @@
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    //input = array and a function
+    //output = boolean
+    //if we implement reduce in this function
+    //we can set our initial accumulator to 'true'
+    //if iterator/test is false
+    //set acc to false and return acc
+    //if acc is false
+    //return acc
+    
+    iterator = iterator || _.identity;
+    
+    return _.reduce(collection, function (accumulator, item) {
+      if (!iterator(item)) {
+        accumulator = false;
+      } 
+      return accumulator;
+    }, true);
+    
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    // input: array and iterator/function
+    // output: boolean
+    // constrains: if no iterator is provided give one! _.identity use?
+    // iterator = iterator || _.identity;
+    // we have to check if at any iteration the iterator returns true
+    // we can create a counter variable to count for falses occurances
+    // and at the end if the counter is > 1 we return true, else return false
+    // let counter = 0;
+    // if(iterator(item) === true) counter++
   };
 
 
@@ -275,11 +302,22 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+    //input = 1st arg an Object, rest args objs with key-value pairs
+    //output = The given obj with its key-value pairs `extended` to the
+    //key-value pairs of the other objs given as args.
+    //loop through our list of arguments, excluding the first one,
+    //and set each key and value found as new key-value pair properties
+    //of our given obj(first arg)
+    //return our given obj(first arg)
   };
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    //Pretty much the same as the past function
+    //with the following conditional:
+    //if the Obj(1st arg) does not have that property already
+    //only then added to it.
   };
 
 
@@ -322,7 +360,17 @@
   // _.memoize should return a function that, when called, will check if it has
   // already computed the result for the given argument and return that value
   // instead if possible.
-  _.memoize = function(func) {
+  
+  
+  // Creates a function that memoizes the result of func. If resolver is provided, it determines the cache key for storing the result based on the arguments provided to the memoized function. By default, the first argument provided to the memoized function is used as the map cache key. The func is invoked with the this binding of the memoized function.
+  
+  _.memoize = function(func, hash) {
+    
+    // hash = hash || {};
+    
+    // return function(arg) {
+    //   if ()
+    // }
   };
 
   // Delays a function for the given number of milliseconds, and then calls

@@ -1,13 +1,13 @@
 (function() {
   'use strict';
-
+// test comment
   window._ = {};
 
   // Returns whatever value is passed as the argument. This function doesn't
   // seem very useful, but remember it--if a function needs to provide an
   // iterator when the user does not pass one in, this will be handy.
   _.identity = function(val) {
-    return val; 
+    return val;
   };
 
   /**
@@ -54,7 +54,7 @@
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
     //input = arrar or object, and function as iterator
-    //output = iteration all elements calling the iterator 
+    //output = iteration all elements calling the iterator
     if (Array.isArray(collection)) {
       for (let i = 0; i < collection.length; i++) {
         iterator(collection[i], i, collection);
@@ -119,7 +119,7 @@
 
   // From underbar documentation on uniq: Produces a duplicate-free version of the array, using === to test object equality. In particular only the first occurence of each value is kept. If you know in advance that the array is sorted, passing true for isSorted will run a much faster algorithm. If you want to compute unique items based on a transformation, pass an iteratee function.
   _.uniq = function(array, isSorted, iterator) {
-    
+
     //sorted = boolean
 
     // var set = new Set(array);
@@ -132,13 +132,13 @@
         if (_.indexOf(testArr, iterator(el)) === -1) {
           testArr.push(iterator(el));
           newArr.push(el);
-        }      
-      });      
+        }
+      });
     } else {
       _.each(array, function(el) {
         if (_.indexOf(newArr, el) === -1) {
           newArr.push(el);
-        }      
+        }
       });
     }
     return newArr;
@@ -151,17 +151,17 @@
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
-    
+
     // input = collection and iterator
     // output = a new mutated array from calling iterator in every element
-    
+
     var arr = [];
     _.each(collection, function(el) {
       arr.push(iterator(el));
     });
-    
+
     return arr;
-    
+
   };
 
   /*
@@ -185,27 +185,27 @@
   // Reduces an array or object to a single value by repetitively calling
   // iterator(accumulator, item) for each item. accumulator should be
   // the return value of the previous iterator call.
-  
+
   //accumaltor = iterator(accumulator, item);
-  //  
+  //
   // You can pass in a starting value for the accumulator as the third argument
   // to reduce. If no starting value is passed, the first element is used as
   // the accumulator, and is never passed to the iterator. In other words, in
   // the case where a starting value is not passed, the iterator is not invoked
   // until the second element, with the first element as its second argument.
-  //  
+  //
   // Example:
   //   var numbers = [1,2,3];
   //   var sum = _.reduce(numbers, function(total, number){
   //     return total + number;
   //   }, 0); // should be 6
-  //  
+  //
   //   var identity = _.reduce([5], function(total, number){
   //     return total + number * number;
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
-    
+
     if (Array.isArray(collection)) {
       if (accumulator === undefined) {
         accumulator = collection[0];
@@ -218,16 +218,16 @@
           var item = collection[i];
           accumulator = iterator(accumulator, item);
         }
-      }      
+      }
     } else if (typeof collection === 'object') {
       for (var key in collection) {
         if (accumulator === undefined) {
           accumulator = collection[key];
-        } 
+        }
         accumulator = iterator(accumulator, collection[key]);
-      }        
-      
-    }    
+      }
+
+    }
     return accumulator;
   };
 
@@ -255,16 +255,16 @@
     //set acc to false and return acc
     //if acc is false
     //return acc
-    
+
     iterator = iterator || _.identity;
-    
+
     return _.reduce(collection, function (accumulator, item) {
       if (!iterator(item)) {
         accumulator = false;
-      } 
+      }
       return accumulator;
     }, true);
-    
+
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
@@ -360,14 +360,14 @@
   // _.memoize should return a function that, when called, will check if it has
   // already computed the result for the given argument and return that value
   // instead if possible.
-  
-  
+
+
   // Creates a function that memoizes the result of func. If resolver is provided, it determines the cache key for storing the result based on the arguments provided to the memoized function. By default, the first argument provided to the memoized function is used as the map cache key. The func is invoked with the this binding of the memoized function.
-  
+
   _.memoize = function(func, hash) {
-    
+
     // hash = hash || {};
-    
+
     // return function(arg) {
     //   if ()
     // }
